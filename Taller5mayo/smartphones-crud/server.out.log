@@ -1,0 +1,5 @@
+
+> smartphones-crud@1.0.0 start
+> node src/app.js
+
+smartphones-crud escuchando en http://localhost:4000

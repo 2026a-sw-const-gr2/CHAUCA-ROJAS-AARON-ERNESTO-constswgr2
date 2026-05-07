@@ -1,0 +1,22 @@
+{
+  "name": "smartphones-crud",
+  "version": "1.0.0",
+  "description": "CRUD academico de smartphones integrado con epn-event-manager.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js"
+  },
+  "keywords": [
+    "crud",
+    "smartphones",
+    "events",
+    "express"
+  ],
+  "author": "Aaron Rojas",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "express": "^4.21.2"
+  }
+}
