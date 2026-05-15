@@ -4,6 +4,7 @@ import { CreateEventEntity } from './entities/create-event.entity';
 import { UpdateEventEntity } from './entities/update-event.entity';
 import { DeleteEventEntity } from './entities/delete-event.entity';
 import { QueryEventEntity } from './entities/query-event.entity';
+import { TaskEntity } from './entities/task.entity';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { QueryEventEntity } from './entities/query-event.entity';
         UpdateEventEntity,
         DeleteEventEntity,
         QueryEventEntity,
+        TaskEntity,
       ],
       synchronize: true,
     }),
