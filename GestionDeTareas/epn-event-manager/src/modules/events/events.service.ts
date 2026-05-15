@@ -87,10 +87,10 @@ export class EventsService {
 
   async findAll(): Promise<object[]> {
     // Incidencia perfectiva: agrega 4 tablas en memoria sin orden garantizado
-    const creates = await this.createRepo.find();
-    const updates = await this.updateRepo.find();
-    const deletes = await this.deleteRepo.find();
-    const queries = await this.queryRepo.find();
+    const creates = await this.createRepo.find({ order: { recorded_at: 'ASC'}});
+    const updates = await this.updateRepo.find({ order: { timestamp: 'ASC'}});
+    const deletes = await this.deleteRepo.find({ order: { createdAt: 'ASC'}});
+    const queries = await this.queryRepo.find({ order: { event_date: 'ASC'}});
 
     // Ordena lexicograficamente por strings de fecha heterogeneos (incorrecto)
     const merged = [
@@ -99,16 +99,6 @@ export class EventsService {
       ...deletes.map((e) => ({ ...e, _table: 'delete_events' })),
       ...queries.map((e) => ({ ...e, _table: 'query_events' })),
     ];
-
-    merged.sort((a, b) => {
-      const ra = a as unknown as Record<string, string>;
-      const rb = b as unknown as Record<string, string>;
-      const ta =
-        ra.recorded_at ?? ra.timestamp ?? ra.createdAt ?? ra.event_date ?? '';
-      const tb =
-        rb.recorded_at ?? rb.timestamp ?? rb.createdAt ?? rb.event_date ?? '';
-      return ta.localeCompare(tb);
-    });
 
     return merged;
   }
