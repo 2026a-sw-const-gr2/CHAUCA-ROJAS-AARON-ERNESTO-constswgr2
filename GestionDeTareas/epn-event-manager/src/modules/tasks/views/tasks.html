@@ -1,0 +1,161 @@
+<!doctype html>
+<!--
+  Problema 12 — Mantenimiento Perfectivo
+  Qué: Vista de la interfaz de usuario para gestión de tareas.
+  Por qué: El HTML, CSS y JS estaban incrustados directamente en tasks.controller.ts,
+           mezclando lógica de presentación con lógica de negocio.
+  Mejora: Separar la capa de presentación hacia este archivo independiente
+          permite editar la UI sin tocar el controlador, mejorando la mantenibilidad.
+-->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestion de Tareas</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #f7f7f7; color: #222; }
+    h1 { margin-top: 0; }
+    form, table { background: #fff; border: 1px solid #ddd; border-radius: 4px; }
+    form { padding: 16px; margin-bottom: 20px; display: grid; gap: 10px; max-width: 720px; }
+    label { font-weight: bold; }
+    input, textarea, select { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #bbb; border-radius: 3px; }
+    textarea { min-height: 70px; }
+    button { padding: 8px 12px; border: 1px solid #777; border-radius: 3px; background: #eee; cursor: pointer; }
+    button:hover { background: #e2e2e2; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; vertical-align: top; }
+    th { background: #efefef; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .message { margin-bottom: 12px; min-height: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Gestion de Tareas</h1>
+  <div id="message" class="message"></div>
+
+  <form id="taskForm">
+    <input type="hidden" id="taskId">
+    <div>
+      <label for="titulo">Titulo</label>
+      <input id="titulo" required>
+    </div>
+    <div>
+      <label for="descripcion">Descripcion</label>
+      <textarea id="descripcion"></textarea>
+    </div>
+    <div>
+      <label for="estado">Estado</label>
+      <select id="estado">
+        <option value="pendiente">pendiente</option>
+        <option value="en progreso">en progreso</option>
+        <option value="completada">completada</option>
+      </select>
+    </div>
+    <div class="actions">
+      <button type="submit">Guardar</button>
+      <button type="button" onclick="clearForm()">Nuevo</button>
+    </div>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Titulo</th>
+        <th>Descripcion</th>
+        <th>Estado</th>
+        <th>Fecha creacion</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tasksBody"></tbody>
+  </table>
+
+  <script>
+    const form = document.getElementById('taskForm');
+    const message = document.getElementById('message');
+    const tasksBody = document.getElementById('tasksBody');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const id = document.getElementById('taskId').value;
+      const data = {
+        titulo: document.getElementById('titulo').value,
+        descripcion: document.getElementById('descripcion').value,
+        estado: document.getElementById('estado').value
+      };
+      const url = id ? '/tasks/' + id : '/tasks';
+      const method = id ? 'PUT' : 'POST';
+
+      await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      clearForm();
+      showMessage('Tarea guardada');
+      loadTasks();
+    });
+
+    async function loadTasks() {
+      const response = await fetch('/tasks');
+      const tasks = await response.json();
+      tasksBody.innerHTML = '';
+
+      tasks.forEach((task) => {
+        const row = document.createElement('tr');
+        row.innerHTML = '<td>' + task.id + '</td>'
+          + '<td>' + escapeHtml(task.titulo) + '</td>'
+          + '<td>' + escapeHtml(task.descripcion || '') + '</td>'
+          + '<td>' + escapeHtml(task.estado) + '</td>'
+          + '<td>' + escapeHtml(task.fecha_creacion) + '</td>'
+          + '<td class="actions">'
+          + '<button type="button" onclick="editTask(' + task.id + ')">Editar</button>'
+          + '<button type="button" onclick="deleteTask(' + task.id + ')">Eliminar</button>'
+          + '</td>';
+        row.dataset.task = JSON.stringify(task);
+        tasksBody.appendChild(row);
+      });
+    }
+
+    function editTask(id) {
+      const row = Array.from(tasksBody.children).find((item) => {
+        return JSON.parse(item.dataset.task).id === id;
+      });
+      const task = JSON.parse(row.dataset.task);
+      document.getElementById('taskId').value = task.id;
+      document.getElementById('titulo').value = task.titulo;
+      document.getElementById('descripcion').value = task.descripcion || '';
+      document.getElementById('estado').value = task.estado;
+    }
+
+    async function deleteTask(id) {
+      await fetch('/tasks/' + id, { method: 'DELETE' });
+      showMessage('Tarea eliminada');
+      loadTasks();
+    }
+
+    function clearForm() {
+      document.getElementById('taskId').value = '';
+      form.reset();
+    }
+
+    function showMessage(text) {
+      message.textContent = text;
+      setTimeout(() => message.textContent = '', 2500);
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    loadTasks();
+  </script>
+</body>
+</html>
