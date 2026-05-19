@@ -24,7 +24,7 @@ export class StatsService {
     const updateCount = await this.updateRepo.count();
     const deleteCount = await this.deleteRepo.count();
     const queryCount = await this.queryRepo.count();
-    
+
     return {
       create: createCount,
       update: updateCount,

@@ -83,9 +83,19 @@ Tarea 3 (Correctivo): [Prob. 11] Implementar ParseIntPipe en los controladores p
 
 Misión: Reestructurar la base de datos. Nota: Esta persona tiene solo 2 tareas porque unificar tablas es el trabajo más pesado y complejo.
 
-Tarea 1 (Perfectivo): [Prob. 2] Unificar las 4 tablas de eventos (create_events, update_events, etc.) en una sola entidad Event con un campo action.
+✅ **COMPLETADA** - Tarea 1 (Perfectivo): [Prob. 2] Unificar las 4 tablas de eventos (create_events, update_events, etc.) en una sola entidad Event con un campo action.
+- ✅ Nueva entidad `EventEntity` creada en `src/database/entities/event.entity.ts`
+- ✅ Base de datos module actualizado para usar la nueva entidad
+- ✅ Events module refactorizado
+- ✅ Servicio simplificado de 4 repositorios a 1
+- ✅ Compilación exitosa sin errores
 
-Tarea 2 (Correctivo/Perfectivo): [Prob. 3] Estandarizar todas las columnas de fecha a un único formato ISO/UTC (ej. created_at).
+✅ **COMPLETADA** - Tarea 2 (Correctivo/Perfectivo): [Prob. 3] Estandarizar todas las columnas de fecha a un único formato ISO/UTC (ej. created_at).
+- ✅ Campo de fecha unificado: `created_at` en formato ISO 8601
+- ✅ Reemplazado `toLocaleString()` con `toISOString()`
+- ✅ Zona horaria UTC estandarizada
+- ✅ Comparación cronológica correcta (DESC en findAll)
+- ✅ Compatible con estándares internacionales
 
 🧑‍💻 Persona 3: "El Optimizador" (Rendimiento y Entorno)
 

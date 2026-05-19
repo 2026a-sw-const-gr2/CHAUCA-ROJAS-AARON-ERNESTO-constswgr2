@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('create_events')
-export class CreateEventEntity {
+@Entity('events')
+export class EventEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -24,5 +24,8 @@ export class CreateEventEntity {
   payload!: string;
 
   @Column({ nullable: true })
-  recorded_at!: string;
+  query_term!: string;
+
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  created_at!: string;
 }

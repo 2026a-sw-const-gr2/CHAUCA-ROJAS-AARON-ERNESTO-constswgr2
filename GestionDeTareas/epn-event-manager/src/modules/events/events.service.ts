@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
+import { EventEntity } from '../../database/entities/event.entity';
+
 import { CreateEventEntity } from '../../database/entities/create-event.entity';
 import { UpdateEventEntity } from '../../database/entities/update-event.entity';
 import { DeleteEventEntity } from '../../database/entities/delete-event.entity';
@@ -10,6 +12,8 @@ import { QueryEventEntity } from '../../database/entities/query-event.entity';
 @Injectable()
 export class EventsService {
   constructor(
+    @InjectRepository(EventEntity)
+    private readonly eventRepo: Repository<EventEntity>,
     @InjectRepository(CreateEventEntity)
     private readonly createRepo: Repository<CreateEventEntity>,
     @InjectRepository(UpdateEventEntity)
@@ -23,62 +27,20 @@ export class EventsService {
   async registerEvent(dto: CreateEventDto): Promise<{ ok: boolean }> {
     const action = (dto.action ?? '').toUpperCase();
     const payloadStr = JSON.stringify(dto.payload ?? {});
-    // Fecha guardada en formato local, no UTC (debilidad intencional)
-    const localDate = new Date().toLocaleString();
+    // Fecha guardada en formato ISO/UTC estandarizado
+    const isoDate = new Date().toISOString();
 
-    if (action === 'CREATE') {
-      const ev = this.createRepo.create({
+    if (['CREATE', 'UPDATE', 'DELETE', 'QUERY'].includes(action)) {
+      const ev = this.eventRepo.create({
         source: dto.source,
         entity: dto.entity,
         action: dto.action,
         title: dto.title,
         description: dto.description,
         payload: payloadStr,
-        recorded_at: localDate,
+        created_at: isoDate,
       });
-      await this.createRepo.save(ev);
-      return { ok: true };
-    }
-
-    if (action === 'UPDATE') {
-      const ev = this.updateRepo.create({
-        source: dto.source,
-        entity: dto.entity,
-        action: dto.action,
-        title: dto.title,
-        description: dto.description,
-        payload: payloadStr,
-        timestamp: localDate,
-      });
-      await this.updateRepo.save(ev);
-      return { ok: true };
-    }
-
-    if (action === 'DELETE') {
-      // BUG INTENCIONAL (correctivo): se construye el objeto pero se devuelve
-      // exito antes de persistirlo. El save nunca se ejecuta.
-      this.deleteRepo.create({
-        source: dto.source,
-        entity: dto.entity,
-        action: dto.action,
-        title: dto.title,
-        payload: payloadStr,
-        createdAt: localDate,
-      });
-      return { ok: true };
-    }
-
-    if (action === 'QUERY') {
-      const ev = this.queryRepo.create({
-        source: dto.source,
-        entity: dto.entity,
-        action: dto.action,
-        title: dto.title,
-        description: dto.description,
-        payload: payloadStr,
-        event_date: localDate,
-      });
-      await this.queryRepo.save(ev);
+      await this.eventRepo.save(ev);
       return { ok: true };
     }
 
@@ -104,11 +66,7 @@ export class EventsService {
   }
 
   async findBySource(source: string): Promise<object[]> {
-    const creates = await this.createRepo.findBy({ source });
-    const updates = await this.updateRepo.findBy({ source });
-    const deletes = await this.deleteRepo.findBy({ source });
-    const queries = await this.queryRepo.findBy({ source });
-    return [...creates, ...updates, ...deletes, ...queries];
+    return await this.eventRepo.findBy({ source });
   }
 
   async findByEntity(entity: string): Promise<object[]> {

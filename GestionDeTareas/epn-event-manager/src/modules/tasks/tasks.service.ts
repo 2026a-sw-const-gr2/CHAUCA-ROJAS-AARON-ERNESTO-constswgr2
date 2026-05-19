@@ -17,7 +17,7 @@ export class TasksService {
       titulo: dto.titulo,
       descripcion: dto.descripcion ?? '',
       estado: this.normalizeStatus(dto.estado),
-      fecha_creacion: new Date().toLocaleString(),
+      fecha_creacion: new Date().toISOString(),
     });
 
     return this.taskRepo.save(task);
