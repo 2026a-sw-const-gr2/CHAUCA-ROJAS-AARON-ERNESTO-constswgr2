@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de Tareas</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <h1>Gestión de Tareas</h1>
+  <div id="message" class="message"></div>
+
+  <form id="taskForm">
+    <input type="hidden" id="taskId">
+    <div>
+      <label for="titulo">Título</label>
+      <input id="titulo" required>
+    </div>
+    <div>
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion"></textarea>
+    </div>
+    <div>
+      <label for="estado">Estado</label>
+      <select id="estado">
+        <option value="pendiente">pendiente</option>
+        <option value="en progreso">en progreso</option>
+        <option value="completada">completada</option>
+      </select>
+    </div>
+    <div class="actions">
+      <button type="submit">Guardar</button>
+      <button type="button" onclick="clearForm()">Nuevo</button>
+    </div>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Fecha Creación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tasksBody"></tbody>
+  </table>
+
+  <script src="/assets/app.js"></script>
+</body>
+</html>

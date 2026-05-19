@@ -6,6 +6,12 @@ import { StatsModule } from './modules/stats/stats.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 
 @Module({
-  imports: [DatabaseModule, EventsModule, HealthModule, StatsModule, TasksModule],
+  imports: [
+    DatabaseModule,
+    EventsModule,
+    HealthModule,
+    StatsModule,
+    TasksModule,
+  ],
 })
 export class AppModule {}

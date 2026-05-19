@@ -1,9 +1,23 @@
-export class CreateEventDto {
-  source: string;
-  entity: string;
-  action: string;
-  title: string;
-  description: string;
+import { IsString, IsObject, IsOptional, IsIn } from 'class-validator';
 
-  payload: any;
+export class CreateEventDto {
+  @IsString()
+  source!: string;
+
+  @IsString()
+  entity!: string;
+
+  @IsIn(['CREATE', 'UPDATE', 'DELETE', 'QUERY'])
+  action!: string;
+
+  @IsString()
+  title!: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @IsOptional()
+  @IsObject()
+  payload?: Record<string, any>;
 }
