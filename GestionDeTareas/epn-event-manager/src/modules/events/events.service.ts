@@ -119,17 +119,4 @@ export class EventsService {
     const queries = await this.queryRepo.findBy({ entity });
     return [...creates, ...updates, ...deletes, ...queries];
   }
-
-  async getStats(): Promise<object> {
-    const createCount = await this.createRepo.count();
-    const updateCount = await this.updateRepo.count();
-    const deleteCount = await this.deleteRepo.count();
-    // Incidencia perfectiva: query_events no se incluye en el total
-    return {
-      create: createCount,
-      update: updateCount,
-      delete: deleteCount,
-      total: createCount + updateCount + deleteCount,
-    };
-  }
 }

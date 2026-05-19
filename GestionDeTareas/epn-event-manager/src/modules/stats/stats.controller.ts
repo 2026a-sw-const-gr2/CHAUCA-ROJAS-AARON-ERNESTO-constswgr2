@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { EventsService } from '../events/events.service';
+import { StatsService } from './stats.service';
 
 @Controller('stats')
 export class StatsController {
-  constructor(private readonly eventsService: EventsService) {}
+  constructor(private readonly statsService: StatsService) {}
 
   @Get()
   getStats() {
-    return this.eventsService.getStats();
+    return this.statsService.getStats();
   }
 }
