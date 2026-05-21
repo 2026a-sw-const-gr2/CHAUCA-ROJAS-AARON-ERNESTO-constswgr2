@@ -1,5 +1,15 @@
 import { IsString, IsObject, IsOptional, IsIn } from 'class-validator';
 
+// Definimos la interfaz del payload 
+export interface EventPayload {
+  id?: number | string;        
+  titulo?: string;             
+  descripcion?: string;        
+  estado?: string;             
+  query_term?: string;         
+  [key: string]: unknown;      
+}
+
 export class CreateEventDto {
   @IsString()
   source!: string;
@@ -7,7 +17,7 @@ export class CreateEventDto {
   @IsString()
   entity!: string;
 
-  @IsIn(['CREATE', 'UPDATE', 'DELETE', 'QUERY'])
+  @IsIn(['CREATE', 'UPDATE', 'DELETE', 'QUERY']) // Validación estricta de acciones
   action!: string;
 
   @IsString()
@@ -19,5 +29,5 @@ export class CreateEventDto {
 
   @IsOptional()
   @IsObject()
-  payload?: Record<string, any>;
+  payload?: EventPayload;
 }

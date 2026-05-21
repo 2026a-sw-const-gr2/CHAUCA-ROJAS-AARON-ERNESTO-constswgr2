@@ -244,6 +244,26 @@ export class StatsModule {}
 
 ---
 
+### 8. ❌ Tipo `any` en los Payloads de Eventos [Problema 7 - Preventivo]
+**Estado**: ✅ CORREGIDO
+
+**Archivos Modificados**:
+- `src/modules/events/dto/create-event.dto.ts`
+- `src/database/entities/event.entity.ts`
+- `src/modules/events/events.service.ts`
+
+**Cambios**:
+- Se eliminó el uso del tipo genérico e inseguro `any` en la propiedad `payload`.
+- Se creó la interfaz estructurada `EventPayload` utilizando el tipo `unknown` para propiedades dinámicas, garantizando type-safety.
+- Se configuró la columna en la entidad como `simple-json` para mapear los objetos de TypeScript de forma nativa a la base de datos sin necesidad de conversiones manuales a texto.
+
+**Beneficios**:
+- ✅ Control estricto sobre las propiedades que ingresan al log de auditoría.
+- ✅ Autocompletado y validación en tiempo de compilación para el manejo de payloads.
+- ✅ Cumplimiento de las reglas estrictas de tipado de TypeScript.
+
+---
+
 ## 🧪 Validaciones Realizadas
 
 ```
@@ -265,10 +285,11 @@ export class StatsModule {}
 | Categoría | Antes | Después |
 |-----------|-------|---------|
 | **Líneas en Controller** | 300+ | 30 |
-| **Validación de entrada** | ❌ Ninguna | ✅ Completa |
-| **Health check** | ❌ Falso | ✅ Real |
-| **Formato de fechas** | ❌ Local | ✅ ISO/UTC |
+| **Validación de entrada** | ❌ Ninguna | ✅ Completa (ValidationPipe Global) |
+| **Health check** | ❌ Falso | ✅ Real(Verificación de BD con SQL) |
+| **Formato de fechas** | ❌ Local | ✅ ISO/UTC Estandarizado (Z) |
 | **Acoplamiento** | ❌ Fuerte | ✅ Débil |
+| **Tipado de Payloads** | ❌ Tipo `any` inseguro | ✅ Interfaz `EventPayload` Type-Safe |
 
 ---
 

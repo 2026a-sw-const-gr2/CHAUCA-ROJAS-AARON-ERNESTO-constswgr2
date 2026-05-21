@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
 import { EventEntity } from '../../database/entities/event.entity';
+import { EventPayload } from './dto/create-event.dto';
 
 import { CreateEventEntity } from '../../database/entities/create-event.entity';
 import { UpdateEventEntity } from '../../database/entities/update-event.entity';
@@ -14,14 +15,6 @@ export class EventsService {
   constructor(
     @InjectRepository(EventEntity)
     private readonly eventRepo: Repository<EventEntity>,
-    @InjectRepository(CreateEventEntity)
-    private readonly createRepo: Repository<CreateEventEntity>,
-    @InjectRepository(UpdateEventEntity)
-    private readonly updateRepo: Repository<UpdateEventEntity>,
-    @InjectRepository(DeleteEventEntity)
-    private readonly deleteRepo: Repository<DeleteEventEntity>,
-    @InjectRepository(QueryEventEntity)
-    private readonly queryRepo: Repository<QueryEventEntity>,
   ) {}
 
   async registerEvent(dto: CreateEventDto): Promise<{ ok: boolean }> {
@@ -31,14 +24,19 @@ export class EventsService {
     const isoDate = new Date().toISOString();
 
     if (['CREATE', 'UPDATE', 'DELETE', 'QUERY'].includes(action)) {
+      
+     // Extraemos el término de búsqueda si el payload lo contiene
+      const queryTerm = dto.payload?.query_term ? String(dto.payload.query_term) : ''; 
+      
       const ev = this.eventRepo.create({
         source: dto.source,
         entity: dto.entity,
         action: dto.action,
         title: dto.title,
         description: dto.description,
-        payload: payloadStr,
+        payload: dto.payload as EventPayload, // Guardamos el payload como JSON estructurado
         created_at: isoDate,
+        query_term: queryTerm,
       });
       await this.eventRepo.save(ev);
       return { ok: true };
@@ -47,34 +45,19 @@ export class EventsService {
     return { ok: false };
   }
 
-  async findAll(): Promise<object[]> {
-    // Incidencia perfectiva: agrega 4 tablas en memoria sin orden garantizado
-    const creates = await this.createRepo.find({ order: { recorded_at: 'ASC'}});
-    const updates = await this.updateRepo.find({ order: { timestamp: 'ASC'}});
-    const deletes = await this.deleteRepo.find({ order: { createdAt: 'ASC'}});
-    const queries = await this.queryRepo.find({ order: { event_date: 'ASC'}});
-
-    // Ordena lexicograficamente por strings de fecha heterogeneos (incorrecto)
-    const merged = [
-      ...creates.map((e) => ({ ...e, _table: 'create_events' })),
-      ...updates.map((e) => ({ ...e, _table: 'update_events' })),
-      ...deletes.map((e) => ({ ...e, _table: 'delete_events' })),
-      ...queries.map((e) => ({ ...e, _table: 'query_events' })),
-    ];
-
-    return merged;
+  // Simplificado para buscar directamente en la tabla unificada cronológicamente
+  async findAll(): Promise<EventEntity[]> {
+    return await this.eventRepo.find({
+      order: { created_at: 'DESC' },
+    });
   }
 
-  async findBySource(source: string): Promise<object[]> {
+  async findBySource(source: string): Promise<EventEntity[]> {
     return await this.eventRepo.findBy({ source });
   }
 
-  async findByEntity(entity: string): Promise<object[]> {
-    // Incidencia preventiva: parametro entity usado directamente sin sanitizar
-    const creates = await this.createRepo.findBy({ entity });
-    const updates = await this.updateRepo.findBy({ entity });
-    const deletes = await this.deleteRepo.findBy({ entity });
-    const queries = await this.queryRepo.findBy({ entity });
-    return [...creates, ...updates, ...deletes, ...queries];
+  // Corregido para usar la tabla unificada protegiendo contra el parámetro sin sanitizar
+  async findByEntity(entity: string): Promise<EventEntity[]> {
+    return await this.eventRepo.findBy({ entity });
   }
 }

@@ -1,5 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+import type { EventPayload } from '../../modules/events/dto/create-event.dto';
+
 @Entity('events')
 export class EventEntity {
   @PrimaryGeneratedColumn()
@@ -20,8 +22,8 @@ export class EventEntity {
   @Column({ nullable: true })
   description!: string;
 
-  @Column({ type: 'text', nullable: true })
-  payload!: string;
+  @Column({ type: 'simple-json', nullable: true })
+  payload!: EventPayload;
 
   @Column({ nullable: true })
   query_term!: string;

@@ -10,6 +10,6 @@ export class UpdateTaskDto {
   descripcion?: string;
 
   @IsOptional()
-  @IsIn(['pendiente', 'en progreso', 'completada'])
+  @IsIn(['pendiente', 'en progreso', 'completada']) //Evita que se ingresen estados no válidos
   estado?: string;
 }
