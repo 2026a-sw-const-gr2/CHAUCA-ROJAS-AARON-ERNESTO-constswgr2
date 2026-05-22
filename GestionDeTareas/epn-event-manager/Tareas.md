@@ -111,15 +111,11 @@ Tarea 3 (Adaptativo): [Prob. 8] Quitar la ruta hardcodeada de SQLite y el synchr
 
 Misión: Hacer la aplicación robusta y monitoreable frente a fallos futuros.
 
-✅ **COMPLETADA** - Tarea 1 (Preventivo): [Prob. 6] Implementar class-validator y ValidationPipe en todos los DTOs.
-- ✅ `ValidationPipe` global configurado en el bootstrap de la aplicación (`main.ts`).
-- ✅ Decoradores de validación aplicados en DTOs de Tareas y Eventos.
+Tarea 1 (Preventivo): [Prob. 6] Implementar class-validator y ValidationPipe en todos los DTOs.
 
-✅ **COMPLETADA** - Tarea 2 (Preventivo): [Prob. 7] Eliminar los tipos any en los payloads y reemplazarlos por interfaces tipadas o DTOs.
-- ✅ Interfaz `EventPayload` implementada en el DTO y mapeada de forma segura mediante `simple-json` en la entidad del sistema.
+Tarea 2 (Preventivo): [Prob. 7] Eliminar los tipos any en los payloads y reemplazarlos por interfaces tipadas o DTOs.
 
-✅ **COMPLETADA** - Tarea 3 (Preventivo): [Prob. 10] Mejorar el endpoint del Health Check (health.controller.ts) para que verifique el estado real de la conexión a la base de datos.
-- ✅ Bloque seguro con consulta real (`SELECT 1`) ejecutándose dinámicamente frente a peticiones de monitoreo.
+Tarea 3 (Preventivo): [Prob. 10] Mejorar el endpoint del Health Check (health.controller.ts) para que verifique el estado real de la conexión a la base de datos.
 
 🧑‍💻 Persona 5: "El Especialista en DX y Vistas" (Developer Experience & UI)
 
