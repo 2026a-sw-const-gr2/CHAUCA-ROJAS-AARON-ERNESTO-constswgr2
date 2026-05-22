@@ -24,10 +24,7 @@ src/
 │   ├── database.module.ts         # Configuración TypeORM (SQLite)
 │   └── entities/
 │       ├── task.entity.ts         # Entidad de tareas
-│       ├── create-event.entity.ts
-│       ├── update-event.entity.ts
-│       ├── delete-event.entity.ts
-│       └── query-event.entity.ts
+│       └── event.entity.ts        # Entidad unificada de eventos
 └── modules/
     ├── tasks/                     # CRUD de tareas + UI web
     ├── events/                    # Registro de eventos de auditoría
@@ -35,7 +32,7 @@ src/
     └── health/                    # Health check de la aplicación
 ```
 
-La base de datos es **SQLite** gestionada por **TypeORM**. Cada tipo de evento (CREATE, UPDATE, DELETE, QUERY) se almacena en su propia tabla.
+La base de datos es **SQLite** gestionada por **TypeORM**. Los eventos se almacenan en una tabla unificada llamada `events`, representada por `EventEntity`. El campo `action` diferencia los tipos de evento permitidos: `CREATE`, `UPDATE`, `DELETE` y `QUERY`.
 
 ---
 
@@ -145,6 +142,8 @@ Valores válidos para `estado`: `pendiente`, `en progreso`, `completada`.
 
 ### Eventos (`/events`)
 
+Los eventos usan la entidad `EventEntity` y se guardan en la tabla `events`. Los campos principales son `source`, `entity`, `action`, `title`, `description`, `payload`, `query_term` y `created_at`.
+
 | Método | Ruta | Descripción |
 |---|---|---|
 | `POST` | `/events` | Registrar un evento de auditoría |
@@ -164,6 +163,18 @@ Valores válidos para `estado`: `pendiente`, `en progreso`, `completada`.
 }
 ```
 Valores válidos para `action`: `CREATE`, `UPDATE`, `DELETE`, `QUERY`.
+
+Para eventos de tipo `QUERY`, el campo `query_term` puede enviarse dentro de `payload`:
+
+```json
+{
+  "source": "ui",
+  "entity": "task",
+  "action": "QUERY",
+  "title": "Busqueda de tareas",
+  "payload": { "query_term": "pendiente" }
+}
+```
 
 ---
 
@@ -218,6 +229,7 @@ npm run test:e2e       # Tests end-to-end
 ```
 epn-event-manager/
 ├── src/
+│   ├── database/entities/event.entity.ts # Tabla unificada events
 │   ├── modules/tasks/views/tasks.html   # Vista HTML de la UI de tareas
 │   └── ...
 ├── db/                                  # Carpeta de la base de datos SQLite (crear manualmente)
@@ -236,3 +248,4 @@ epn-event-manager/
 - Los archivos `.html` en `src/` se copian automáticamente a `dist/` durante `npm run build` gracias a la configuración `assets` en `nest-cli.json`.
 - Para desarrollo con `npm run start:dev`, los archivos HTML en `src/` se usan directamente (no se necesita build).
 - Al agregar nuevas entidades, incluirlas en el array `entities` de `src/database/database.module.ts`.
+- Los eventos deben seguir usando `EventEntity` y la tabla `events`; el tipo de evento se diferencia por el campo `action`.

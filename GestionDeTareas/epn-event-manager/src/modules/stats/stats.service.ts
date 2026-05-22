@@ -1,29 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateEventEntity } from '../../database/entities/create-event.entity';
-import { UpdateEventEntity } from '../../database/entities/update-event.entity';
-import { DeleteEventEntity } from '../../database/entities/delete-event.entity';
-import { QueryEventEntity } from '../../database/entities/query-event.entity';
+import { EventEntity } from '../../database/entities/event.entity';
 
 @Injectable()
 export class StatsService {
   constructor(
-    @InjectRepository(CreateEventEntity)
-    private createRepo: Repository<CreateEventEntity>,
-    @InjectRepository(UpdateEventEntity)
-    private updateRepo: Repository<UpdateEventEntity>,
-    @InjectRepository(DeleteEventEntity)
-    private deleteRepo: Repository<DeleteEventEntity>,
-    @InjectRepository(QueryEventEntity)
-    private queryRepo: Repository<QueryEventEntity>,
+    @InjectRepository(EventEntity)
+    private eventRepo: Repository<EventEntity>,
   ) {}
 
   async getStats(): Promise<object> {
-    const createCount = await this.createRepo.count();
-    const updateCount = await this.updateRepo.count();
-    const deleteCount = await this.deleteRepo.count();
-    const queryCount = await this.queryRepo.count();
+    const createCount = await this.eventRepo.countBy({ action: 'CREATE' });
+    const updateCount = await this.eventRepo.countBy({ action: 'UPDATE' });
+    const deleteCount = await this.eventRepo.countBy({ action: 'DELETE' });
+    const queryCount = await this.eventRepo.countBy({ action: 'QUERY' });
 
     return {
       create: createCount,
