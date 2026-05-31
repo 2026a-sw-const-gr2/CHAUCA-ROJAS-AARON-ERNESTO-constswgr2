@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.vscode/
+# Antes: .env no ignorado — ahora excluido para no exponer credenciales en repositorio
+.env
+db/

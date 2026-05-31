@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CRUD de Smartphones</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="toolbar">
+        <div>
+          <h1>Smartphones</h1>
+          <p>CRUD persistente con auditoria de eventos</p>
+        </div>
+        <button id="reloadButton" type="button">Actualizar</button>
+      </section>
+
+      <section id="message" class="message" hidden></section>
+
+      <section class="layout">
+        <form id="smartphoneForm" class="panel">
+          <h2 id="formTitle">Crear smartphone</h2>
+          <input id="smartphoneId" type="hidden" />
+
+          <label>
+            Marca
+            <input id="brand" name="brand" required />
+          </label>
+
+          <label>
+            Modelo
+            <input id="model" name="model" required />
+          </label>
+
+          <label>
+            Precio
+            <input id="price" name="price" type="number" min="1" step="0.01" required />
+          </label>
+
+          <label>
+            Almacenamiento
+            <input id="storage" name="storage" required />
+          </label>
+
+          <div class="actions">
+            <button type="submit">Guardar</button>
+            <button id="cancelButton" type="button" class="secondary" hidden>Cancelar</button>
+          </div>
+        </form>
+
+        <section class="panel">
+          <h2>Catalogo</h2>
+          <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Marca</th>
+                  <th>Modelo</th>
+                  <th>Precio</th>
+                  <th>Storage</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="smartphonesTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
