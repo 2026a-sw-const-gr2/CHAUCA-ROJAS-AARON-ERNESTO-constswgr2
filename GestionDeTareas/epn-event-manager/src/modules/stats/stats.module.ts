@@ -5,9 +5,7 @@ import { StatsService } from './stats.service';
 import { EventEntity } from '../../database/entities/event.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([EventEntity]),
-  ],
+  imports: [TypeOrmModule.forFeature([EventEntity])],
   controllers: [StatsController],
   providers: [StatsService],
 })

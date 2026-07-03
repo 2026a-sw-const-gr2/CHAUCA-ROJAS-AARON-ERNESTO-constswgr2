@@ -10,7 +10,7 @@ import { EventEntity } from './entities/event.entity';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        type: configService.get<any>('DB_TYPE', 'better-sqlite3'),
+        type: configService.get<'better-sqlite3'>('DB_TYPE', 'better-sqlite3'),
         database: configService.get<string>('DB_NAME', 'db/events.sqlite'),
         entities: [TaskEntity, EventEntity],
         synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true',
