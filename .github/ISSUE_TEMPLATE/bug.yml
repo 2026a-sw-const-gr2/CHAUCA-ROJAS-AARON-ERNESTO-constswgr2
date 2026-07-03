@@ -1,0 +1,26 @@
+name: Bug
+description: Reporte de error
+labels: ["bug"]
+body:
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Descripción del error
+    validations:
+      required: true
+
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos para reproducir
+      placeholder: "1. Ir a...\n2. Hacer clic en...\n3. Ver error..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      placeholder: "- [ ] El error queda corregido"
+    validations:
+      required: true

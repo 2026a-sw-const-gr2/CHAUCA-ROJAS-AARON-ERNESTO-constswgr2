@@ -46,4 +46,4 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm test -- --coverage
+      - run: npm test
