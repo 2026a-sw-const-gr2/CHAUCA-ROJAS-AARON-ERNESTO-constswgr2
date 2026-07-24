@@ -11,6 +11,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -32,8 +33,8 @@ export class TasksController {
   }
 
   @Get()
-  findAll() {
-    return this.tasksService.findAll();
+  findAll(@Query('includeDeleted') includeDeleted?: string) {
+    return this.tasksService.findAll(includeDeleted === 'true');
   }
 
   @Put(':id')

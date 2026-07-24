@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1784936842012" clover="3.2.0">
+  <project timestamp="1784936842012" name="All files">
+    <metrics statements="191" coveredstatements="31" conditionals="70" coveredconditionals="14" methods="34" coveredmethods="6" elements="295" coveredelements="51" complexity="0" loc="191" ncloc="191" packages="9" files="21" classes="21"/>
+    <package name="src">
+      <metrics statements="26" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
+      <file name="app.controller.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\app.controller.ts">
+        <metrics statements="6" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+      </file>
+      <file name="app.module.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\app.module.ts">
+        <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+      </file>
+      <file name="app.service.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\app.service.ts">
+        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+      </file>
+      <file name="main.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\main.ts">
+        <metrics statements="9" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="24" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.database">
+      <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="database.module.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\database\database.module.ts">
+        <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.database.entities">
+      <metrics statements="20" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="event.entity.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\database\entities\event.entity.ts">
+        <metrics statements="12" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+      </file>
+      <file name="task.entity.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\database\entities\task.entity.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.events">
+      <metrics statements="36" coveredstatements="0" conditionals="18" coveredconditionals="0" methods="10" coveredmethods="0"/>
+      <file name="events.controller.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\events\events.controller.ts">
+        <metrics statements="13" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="10" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+      </file>
+      <file name="events.module.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\events\events.module.ts">
+        <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+      </file>
+      <file name="events.service.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\events\events.service.ts">
+        <metrics statements="17" coveredstatements="0" conditionals="10" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="12" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.events.dto">
+      <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="create-event.dto.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\events\dto\create-event.dto.ts">
+        <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.health">
+      <metrics statements="13" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="health.controller.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\health\health.controller.ts">
+        <metrics statements="10" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="20" count="0" type="stmt"/>
+      </file>
+      <file name="health.module.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\health\health.module.ts">
+        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.stats">
+      <metrics statements="23" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="4" coveredmethods="0"/>
+      <file name="stats.controller.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\stats\stats.controller.ts">
+        <metrics statements="6" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+      </file>
+      <file name="stats.module.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\stats\stats.module.ts">
+        <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+      </file>
+      <file name="stats.service.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\stats\stats.service.ts">
+        <metrics statements="11" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="10" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.tasks">
+      <metrics statements="48" coveredstatements="23" conditionals="32" coveredconditionals="14" methods="12" coveredmethods="6"/>
+      <file name="tasks.controller.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\tasks.controller.ts">
+        <metrics statements="18" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="31" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="41" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+      </file>
+      <file name="tasks.module.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\tasks.module.ts">
+        <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+      </file>
+      <file name="tasks.service.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\tasks.service.ts">
+        <metrics statements="24" coveredstatements="23" conditionals="20" coveredconditionals="14" methods="6" coveredmethods="6"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="7" type="cond" truecount="3" falsecount="1"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="36" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="40" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="41" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="42" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="50" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="60" count="1" type="cond" truecount="2" falsecount="2"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.tasks.dto">
+      <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="create-task.dto.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\dto\create-task.dto.ts">
+        <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+      </file>
+      <file name="update-task.dto.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\dto\update-task.dto.ts">
+        <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

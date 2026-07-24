@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('tasks')
 export class TaskEntity {
@@ -16,4 +16,7 @@ export class TaskEntity {
 
   @Column()
   fecha_creacion!: string;
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true })
+  deletedAt!: Date | null;
 }
