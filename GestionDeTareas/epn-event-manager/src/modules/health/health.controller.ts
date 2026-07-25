@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, ServiceUnavailableException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 
 @Controller('health')
@@ -12,17 +12,14 @@ export class HealthController {
       await this.dataSource.query('SELECT 1');
       return {
         status: 'ok',
-        database: 'connected',
-        timestamp: new Date().toISOString(),
+        database: 'up',
       };
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      return {
+    } catch {
+      throw new ServiceUnavailableException({
         status: 'error',
-        database: 'disconnected',
-        error: message,
+        database: 'down',
         timestamp: new Date().toISOString(),
-      };
+      });
     }
   }
 }
