@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsIn } from 'class-validator';
+import { IsIn, IsInt, IsOptional, IsString } from 'class-validator';
 
 export class UpdateTaskDto {
   @IsOptional()
@@ -16,4 +16,8 @@ export class UpdateTaskDto {
   @IsOptional()
   @IsString()
   responsable?: string;
+
+  @IsOptional()
+  @IsInt()
+  projectId?: number;
 }

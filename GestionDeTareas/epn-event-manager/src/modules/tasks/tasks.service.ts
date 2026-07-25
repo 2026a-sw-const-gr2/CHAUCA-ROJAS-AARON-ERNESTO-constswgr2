@@ -20,6 +20,7 @@ export class TasksService {
       estado: this.normalizeStatus(dto.estado),
       fecha_creacion: new Date().toISOString(),
       responsable: dto.responsable,
+      projectId: dto.projectId,
     });
 
     return this.taskRepo.save(task);
@@ -59,6 +60,7 @@ export class TasksService {
     task.descripcion = dto.descripcion ?? task.descripcion;
     task.estado = dto.estado ? this.normalizeStatus(dto.estado) : task.estado;
     task.responsable = dto.responsable ?? task.responsable;
+    task.projectId = dto.projectId ?? task.projectId;
 
     return this.taskRepo.save(task);
   }

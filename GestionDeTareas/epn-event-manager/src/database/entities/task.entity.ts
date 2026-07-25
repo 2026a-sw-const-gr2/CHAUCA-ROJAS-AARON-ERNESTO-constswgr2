@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ProjectEntity } from './project.entity';
 
 @Entity('tasks')
 export class TaskEntity {
@@ -19,4 +20,10 @@ export class TaskEntity {
 
   @Column({ nullable: true })
   responsable!: string;
+
+  @Column({ nullable: true })
+  projectId!: number;
+
+  @ManyToOne(() => ProjectEntity, (project) => project.tasks, { nullable: true })
+  project!: ProjectEntity;
 }
