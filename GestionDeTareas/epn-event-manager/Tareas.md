@@ -1,71 +1,7 @@
-Plan de Mantenimiento de Software: epn-event-manager
-
-Basado en el diagnóstico del proyecto y los conceptos de mantenimiento de software, se ha realizado la siguiente clasificación y distribución de tareas para un equipo de 5 personas.
-
-1. Clasificación de Problemas por Tipo de Mantenimiento
-
-Según las definiciones de la presentación, los 14 hallazgos se clasifican de la siguiente manera:
-
-🛠️ Mantenimiento Correctivo
-
-(Se enfoca en identificar y corregir defectos y errores post-implementación).
-
-Problema 1: El evento DELETE no se guarda, pero responde éxito. (Error funcional crítico).
-
-Problema 3: Fechas guardadas como texto local y con nombres distintos. (Causa errores de ordenamiento y zonas horarias).
-
-Problema 5: Estadísticas incompletas (Falta query_events). (Error de lógica que genera reportes incorrectos).
-
-Problema 11: Parámetros numéricos sin validación. (Genera errores de ejecución como NaN).
-
-⚙️ Mantenimiento Adaptativo
-
-(Modificaciones para que el software funcione en entornos cambiantes).
-
-Problema 8: Base SQLite hardcodeada y synchronize: true. (Debe adaptarse para funcionar mediante variables de entorno y migraciones, permitiendo el despliegue en distintos entornos como Dev, QA o Producción).
-
-🚀 Mantenimiento Perfectivo
-
-(Mejoras que optimizan el rendimiento, la mantenibilidad y la interfaz).
-
-Problema 2: Modelo de eventos dividido en cuatro tablas casi iguales. (Optimización del código: Refactorización para reducir complejidad).
-
-Problema 4: Ordenamiento de eventos en memoria y por texto. (Aumento de la velocidad de procesamiento y optimización del rendimiento).
-
-Problema 9: Acoplamiento entre StatsModule y EventsService. (Optimización del código y arquitectura).
-
-Problema 12: HTML, CSS y JS incrustados dentro del controlador. (Mejora en la usabilidad y mantenibilidad al separar la vista de la lógica).
-
-🛡️ Mantenimiento Preventivo
-
-(Prácticas proactivas para prevenir problemas futuros y monitorear).
-
-Problema 6: DTOs sin validaciones. (Reduce el riesgo de interrupciones por inyección de datos corruptos).
-
-Problema 7: Uso de any en payload. (Enfoque proactivo para evitar errores de tipado en el futuro).
-
-Problema 10: Health check superficial. (Uso de herramientas de monitoreo: debe revisar la BD real para prevenir caídas silenciosas).
-
-Problema 13: README genérico. (Previene errores humanos en el onboarding y despliegue).
-
-Problema 14: Script lint corrige automáticamente. (Previene mezclar cambios de estilo con cambios funcionales, reduciendo riesgos en el control de versiones).
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-2. Distribución de Tareas (Equipo de 5 Personas)
+1. Distribución de Tareas (Equipo de 5 Personas)
 
 Para que el trabajo sea eficiente, las tareas se han agrupado por dominio técnico. Esto evita conflictos en Git (merge conflicts) y permite que cada integrante se enfoque en un área específica.
 
