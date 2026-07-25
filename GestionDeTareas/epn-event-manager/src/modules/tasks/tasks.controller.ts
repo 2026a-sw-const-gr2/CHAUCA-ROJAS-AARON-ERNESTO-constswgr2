@@ -34,8 +34,13 @@ export class TasksController {
   }
 
   @Get()
+<<<<<<< HEAD
   findAll(@Query() queryDto: FindTasksQueryDto) {
     return this.tasksService.findAll(queryDto);
+=======
+  findAll(@Query('includeDeleted') includeDeleted?: string) {
+    return this.tasksService.findAll(includeDeleted === 'true');
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
   }
 
   @Put(':id')

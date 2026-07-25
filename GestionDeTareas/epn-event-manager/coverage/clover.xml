@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <coverage generated="1784939929291" clover="3.2.0">
   <project timestamp="1784939929291" name="All files">
     <metrics statements="212" coveredstatements="16" conditionals="85" coveredconditionals="0" methods="36" coveredmethods="2" elements="333" coveredelements="18" complexity="0" loc="212" ncloc="212" packages="9" files="22" classes="22"/>
+=======
+<coverage generated="1784936842012" clover="3.2.0">
+  <project timestamp="1784936842012" name="All files">
+    <metrics statements="191" coveredstatements="31" conditionals="70" coveredconditionals="14" methods="34" coveredmethods="6" elements="295" coveredelements="51" complexity="0" loc="191" ncloc="191" packages="9" files="21" classes="21"/>
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
     <package name="src">
       <metrics statements="26" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
       <file name="app.controller.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\app.controller.ts">
@@ -57,7 +63,11 @@
       </file>
     </package>
     <package name="src.database.entities">
+<<<<<<< HEAD
       <metrics statements="20" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+=======
+      <metrics statements="20" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
       <file name="event.entity.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\database\entities\event.entity.ts">
         <metrics statements="12" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
@@ -74,6 +84,7 @@
         <line num="32" count="0" type="stmt"/>
       </file>
       <file name="task.entity.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\database\entities\task.entity.ts">
+<<<<<<< HEAD
         <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
@@ -83,6 +94,17 @@
         <line num="15" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
+=======
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
       </file>
     </package>
     <package name="src.modules.events">
@@ -187,7 +209,11 @@
         <line num="3" count="0" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
+<<<<<<< HEAD
         <line num="12" count="0" type="stmt"/>
+=======
+        <line num="14" count="0" type="stmt"/>
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
       </file>
       <file name="stats.service.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\stats\stats.service.ts">
         <metrics statements="11" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -205,15 +231,22 @@
       </file>
     </package>
     <package name="src.modules.tasks">
+<<<<<<< HEAD
       <metrics statements="57" coveredstatements="0" conditionals="47" coveredconditionals="0" methods="12" coveredmethods="0"/>
       <file name="tasks.controller.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\tasks.controller.ts">
         <metrics statements="19" coveredstatements="0" conditionals="16" coveredconditionals="0" methods="6" coveredmethods="0"/>
+=======
+      <metrics statements="48" coveredstatements="23" conditionals="32" coveredconditionals="14" methods="12" coveredmethods="6"/>
+      <file name="tasks.controller.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\tasks.controller.ts">
+        <metrics statements="18" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="6" coveredmethods="0"/>
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
+<<<<<<< HEAD
         <line num="19" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
         <line num="23" count="0" type="cond" truecount="0" falsecount="4"/>
@@ -227,6 +260,20 @@
         <line num="43" count="0" type="stmt"/>
         <line num="47" count="0" type="stmt"/>
         <line num="48" count="0" type="stmt"/>
+=======
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="31" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="41" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
       </file>
       <file name="tasks.module.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\tasks.module.ts">
         <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -238,6 +285,7 @@
         <line num="12" count="0" type="stmt"/>
       </file>
       <file name="tasks.service.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\tasks.service.ts">
+<<<<<<< HEAD
         <metrics statements="32" coveredstatements="0" conditionals="31" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
@@ -288,11 +336,53 @@
       </file>
       <file name="find-tasks-query.dto.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\dto\find-tasks-query.dto.ts">
         <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+=======
+        <metrics statements="24" coveredstatements="23" conditionals="20" coveredconditionals="14" methods="6" coveredmethods="6"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="7" type="cond" truecount="3" falsecount="1"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="36" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="40" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="41" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="42" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="50" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="60" count="1" type="cond" truecount="2" falsecount="2"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.tasks.dto">
+      <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="create-task.dto.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\dto\create-task.dto.ts">
+        <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+      </file>
+      <file name="update-task.dto.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\dto\update-task.dto.ts">
+        <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
         <line num="1" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
+<<<<<<< HEAD
         <line num="18" count="0" type="stmt"/>
       </file>
       <file name="update-task.dto.ts" path="D:\Software\Projects\EPN_6\construccion_software_evolucion\CHAUCA-ROJAS-AARON-ERNESTO-constswgr2\GestionDeTareas\epn-event-manager\src\modules\tasks\dto\update-task.dto.ts">
@@ -305,6 +395,8 @@
         <line num="23" count="1" type="stmt"/>
         <line num="27" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
+=======
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
       </file>
     </package>
   </project>

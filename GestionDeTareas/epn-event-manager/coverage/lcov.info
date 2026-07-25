@@ -119,6 +119,7 @@ TN:
 SF:src\database\entities\task.entity.ts
 FNF:0
 FNH:0
+<<<<<<< HEAD
 DA:1,0
 DA:4,0
 DA:6,0
@@ -129,6 +130,18 @@ DA:18,0
 DA:21,0
 LF:8
 LH:0
+=======
+DA:1,1
+DA:4,1
+DA:6,1
+DA:9,1
+DA:12,1
+DA:15,1
+DA:18,1
+DA:21,1
+LF:8
+LH:8
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
 BRF:0
 BRH:0
 end_of_record
@@ -323,7 +336,11 @@ DA:2,0
 DA:3,0
 DA:4,0
 DA:5,0
+<<<<<<< HEAD
 DA:12,0
+=======
+DA:14,0
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
 LF:6
 LH:0
 BRF:0
@@ -359,12 +376,21 @@ BRH:0
 end_of_record
 TN:
 SF:src\modules\tasks\tasks.controller.ts
+<<<<<<< HEAD
 FN:23,(anonymous_4)
 FN:27,(anonymous_5)
 FN:32,(anonymous_6)
 FN:37,(anonymous_7)
 FN:42,(anonymous_8)
 FN:47,(anonymous_9)
+=======
+FN:22,(anonymous_4)
+FN:26,(anonymous_5)
+FN:31,(anonymous_6)
+FN:36,(anonymous_7)
+FN:41,(anonymous_8)
+FN:46,(anonymous_9)
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
 FNF:6
 FNH:0
 FNDA:0,(anonymous_4)
@@ -379,6 +405,7 @@ DA:4,0
 DA:16,0
 DA:17,0
 DA:18,0
+<<<<<<< HEAD
 DA:19,0
 DA:22,0
 DA:23,0
@@ -411,6 +438,35 @@ BRDA:23,6,1,0
 BRDA:23,7,0,0
 BRDA:23,7,1,0
 BRF:16
+=======
+DA:21,0
+DA:22,0
+DA:26,0
+DA:27,0
+DA:31,0
+DA:32,0
+DA:36,0
+DA:37,0
+DA:41,0
+DA:42,0
+DA:46,0
+DA:47,0
+LF:18
+LH:0
+BRDA:31,0,0,0
+BRDA:31,0,1,0
+BRDA:31,1,0,0
+BRDA:31,1,1,0
+BRDA:41,2,0,0
+BRDA:41,2,1,0
+BRDA:41,3,0,0
+BRDA:41,3,1,0
+BRDA:22,4,0,0
+BRDA:22,4,1,0
+BRDA:22,5,0,0
+BRDA:22,5,1,0
+BRF:12
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
 BRH:0
 end_of_record
 TN:
@@ -430,6 +486,7 @@ BRH:0
 end_of_record
 TN:
 SF:src\modules\tasks\tasks.service.ts
+<<<<<<< HEAD
 FN:11,(anonymous_4)
 FN:16,(anonymous_5)
 FN:28,(anonymous_6)
@@ -528,11 +585,91 @@ DA:26,1
 DA:30,1
 LF:8
 LH:8
+=======
+FN:10,(anonymous_4)
+FN:15,(anonymous_5)
+FN:26,(anonymous_6)
+FN:33,(anonymous_7)
+FN:47,(anonymous_8)
+FN:57,(anonymous_9)
+FNF:6
+FNH:6
+FNDA:7,(anonymous_4)
+FNDA:1,(anonymous_5)
+FNDA:2,(anonymous_6)
+FNDA:2,(anonymous_7)
+FNDA:2,(anonymous_8)
+FNDA:1,(anonymous_9)
+DA:1,1
+DA:2,1
+DA:3,1
+DA:4,1
+DA:9,1
+DA:12,7
+DA:16,1
+DA:23,1
+DA:27,2
+DA:34,2
+DA:36,2
+DA:37,1
+DA:40,1
+DA:41,1
+DA:42,1
+DA:44,1
+DA:48,2
+DA:50,2
+DA:51,1
+DA:54,1
+DA:58,1
+DA:60,1
+DA:61,0
+DA:64,1
+LF:24
+LH:23
+BRDA:18,0,0,1
+BRDA:18,0,1,0
+BRDA:36,1,0,1
+BRDA:36,1,1,1
+BRDA:40,2,0,1
+BRDA:40,2,1,0
+BRDA:41,3,0,1
+BRDA:41,3,1,1
+BRDA:42,4,0,0
+BRDA:42,4,1,1
+BRDA:50,5,0,1
+BRDA:50,5,1,1
+BRDA:60,6,0,0
+BRDA:60,6,1,1
+BRDA:60,7,0,1
+BRDA:60,7,1,0
+BRDA:12,8,0,1
+BRDA:12,8,1,0
+BRDA:12,9,0,1
+BRDA:12,9,1,1
+BRF:20
+BRH:14
+end_of_record
+TN:
+SF:src\modules\tasks\dto\create-task.dto.ts
+FNF:0
+FNH:0
+DA:1,0
+DA:3,0
+DA:5,0
+DA:9,0
+DA:13,0
+LF:5
+LH:0
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
 BRF:0
 BRH:0
 end_of_record
 TN:
+<<<<<<< HEAD
 SF:src\modules\tasks\dto\find-tasks-query.dto.ts
+=======
+SF:src\modules\tasks\dto\update-task.dto.ts
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
 FNF:0
 FNH:0
 DA:1,0
@@ -540,12 +677,17 @@ DA:3,0
 DA:6,0
 DA:10,0
 DA:14,0
+<<<<<<< HEAD
 DA:18,0
 LF:6
+=======
+LF:5
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
 LH:0
 BRF:0
 BRH:0
 end_of_record
+<<<<<<< HEAD
 TN:
 SF:src\modules\tasks\dto\update-task.dto.ts
 FN:15,(anonymous_2)
@@ -565,3 +707,5 @@ LH:8
 BRF:0
 BRH:0
 end_of_record
+=======
+>>>>>>> 07138990f8171950137a2e92852f999618399d01

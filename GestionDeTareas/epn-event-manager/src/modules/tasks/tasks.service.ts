@@ -25,6 +25,7 @@ export class TasksService {
     return this.taskRepo.save(task);
   }
 
+<<<<<<< HEAD
   async findAll(queryDto: FindTasksQueryDto = {}): Promise<TaskEntity[]> {
     const qb = this.taskRepo.createQueryBuilder('task');
 
@@ -46,6 +47,13 @@ export class TasksService {
     }
 
     return qb.orderBy('task.id', 'DESC').getMany();
+=======
+  async findAll(includeDeleted?: boolean): Promise<TaskEntity[]> {
+    return this.taskRepo.find({
+      order: { id: 'DESC' },
+      withDeleted: includeDeleted === true,
+    });
+>>>>>>> 07138990f8171950137a2e92852f999618399d01
   }
 
   async update(id: number, dto: UpdateTaskDto): Promise<TaskEntity> {
@@ -64,7 +72,7 @@ export class TasksService {
   }
 
   async remove(id: number): Promise<{ ok: boolean }> {
-    const result = await this.taskRepo.delete(id);
+    const result = await this.taskRepo.softDelete(id);
 
     if (!result.affected) {
       throw new NotFoundException('Tarea no encontrada');
