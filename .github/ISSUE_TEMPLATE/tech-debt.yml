@@ -1,0 +1,25 @@
+name: Tech Debt
+description: Deuda técnica o mejora interna
+labels: ["tech-debt"]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Problema técnico
+    validations:
+      required: true
+
+  - type: textarea
+    id: solucion
+    attributes:
+      label: Solución propuesta
+    validations:
+      required: true
+
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      placeholder: "- [ ] La deuda técnica queda reducida"
+    validations:
+      required: true

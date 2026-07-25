@@ -126,3 +126,163 @@ Tarea 1 (Perfectivo): [Prob. 12] Extraer el HTML, CSS y JS incrustados en tasks.
 Tarea 2 (Preventivo): [Prob. 13] Redactar un README.md completo documentando la arquitectura, endpoints y variables de entorno.
 
 Tarea 3 (Preventivo): [Prob. 14] Separar el script del package.json en dos comandos distintos: lint (solo revisión) y lint:fix (corrección).
+
+
+3. Backlog de Features propuestas
+
+Estas tareas pueden agregarse como features al proyecto para mejorar la usabilidad, la trazabilidad y la calidad de la aplicación.
+
+Feature 1: Añadir endpoint de detalle de tarea
+- Agregar `GET /tasks/:id` para recuperar una tarea por ID.
+- Retornar `404` si la tarea no existe.
+- Usar `ParseIntPipe` para validar el ID.
+- Criterios de aceptación:
+  - Existe un endpoint funcional `GET /tasks/:id`.
+  - El endpoint retorna `200` con la tarea correcta cuando el ID existe.
+  - El endpoint retorna `404` si el ID no corresponde a ninguna tarea.
+  - El ID inválido (no numérico) falla con un error de validación.
+
+Feature 2: Filtrado de tareas por estado y búsqueda por título
+- Extender `GET /tasks` con query params `estado` y `q`.
+- Permitir devolver tareas filtradas por `pendiente`, `en progreso` o `completada`.
+- Permitir buscar coincidencias parciales en `titulo`.
+- Criterios de aceptación:
+  - `GET /tasks?estado=pendiente` retorna solo tareas en estado `pendiente`.
+  - `GET /tasks?q=revision` retorna tareas cuyo título contiene `revision`.
+  - Si no se pasa filtro, el endpoint retorna todas las tareas activas.
+  - El filtro `estado` rechaza valores inválidos con un error claro.
+
+Feature 3: Paginación en listas de tareas y eventos
+- Soportar `page` y `limit` en `GET /tasks` y `GET /events`.
+- Devolver metadatos de paginación: `total`, `page`, `limit`, `pages`.
+- Criterios de aceptación:
+  - `GET /tasks?page=2&limit=5` retorna la página correcta de tareas.
+  - La respuesta incluye `total`, `page`, `limit` y `pages`.
+  - `page` y `limit` inválidos son manejados con validación.
+
+Feature 4: Filtros de eventos por acción y rango de fechas
+- Añadir `GET /events?action=CREATE,UPDATE` y `fromDate`/`toDate`.
+- Permitir filtrar eventos por `action` y por fecha de creación.
+- Criterios de aceptación:
+  - `GET /events?action=CREATE` retorna solo eventos `CREATE`.
+  - `GET /events?fromDate=2026-01-01&toDate=2026-01-31` retorna eventos dentro del rango.
+  - Los filtros combinados funcionan juntos correctamente.
+  - Los formatos de fecha inválidos devuelven un error de validación.
+
+Feature 5: Estadísticas avanzadas y tendencias
+- Extender `GET /stats` con datos por rango de fechas.
+- Incluir un conteo por `action` y porcentaje de crecimiento frente al periodo anterior.
+- Criterios de aceptación:
+  - `GET /stats?fromDate=2026-06-01&toDate=2026-06-30` retorna estadísticas filtradas.
+  - La respuesta contiene conteos por acción y los totales.
+  - Se muestra el porcentaje de crecimiento frente al periodo anterior.
+
+Feature 6: Registro de usuario/propietario de tarea
+- Añadir campo `asignado_a` a `TaskEntity` y DTOs.
+- Permitir consultar tareas por responsable.
+- Criterios de aceptación:
+  - Las tareas pueden crearse y actualizarse con `asignado_a`.
+  - `GET /tasks?asignado_a=juan` retorna solo tareas asignadas a `juan`.
+  - El campo se persiste correctamente en la base de datos.
+
+Feature 7: Campos adicionales en tareas: prioridad y fecha de vencimiento
+- Añadir `prioridad` (`baja`, `media`, `alta`) y `fecha_vencimiento`.
+- Mostrar estado de tareas vencidas en la API.
+- Criterios de aceptación:
+  - Las tareas aceptan `prioridad` y `fecha_vencimiento` en el modelo.
+  - La API retorna un indicador `vencida: true/false` cuando aplica.
+  - El campo `prioridad` valida los valores permitidos.
+
+Feature 8: Soft delete / restaurar tareas
+- Cambiar eliminación física por `deleted_at` opcional.
+- Agregar endpoint `POST /tasks/:id/restore`.
+- Ignorar tareas marcadas como eliminadas en las listas normales.
+- Criterios de aceptación:
+  - `DELETE /tasks/:id` marca `deleted_at` sin borrar la fila.
+  - Tareas borradas no aparecen en `GET /tasks` normales.
+  - `POST /tasks/:id/restore` rehace la tarea eliminada.
+  - Si la tarea no existe o no está borrada, el endpoint retorna un error apropiado.
+
+Feature 9: UI web mejorada con frontend separado
+- Mover los HTML/CSS/JS incrustados a `src/modules/tasks/views/`.
+- Mejorar la interfaz para crear, editar, filtrar y marcar tareas completadas.
+- Criterios de aceptación:
+  - La vista `GET /tasks/ui` carga archivos estáticos desde `views/`.
+  - La interfaz permite crear y editar tareas sin errores.
+  - El filtrado y marcado de tareas funciona desde la UI.
+
+Feature 10: Auditoría de eventos automática desde operaciones CRUD
+- Registrar automáticamente eventos `CREATE`, `UPDATE`, `DELETE` cuando se manipulan tareas.
+- Usar `EventsService` internamente en `TasksService`.
+- Criterios de aceptación:
+  - Crear, actualizar y borrar tareas genera eventos de auditoría.
+  - Los eventos tienen `action` correcto y payload con datos relevantes.
+  - No se registran eventos duplicados para una misma operación.
+
+Feature 11: Documentación y pruebas de contrato
+- Crear especificaciones de API simples para todos los endpoints.
+- Añadir pruebas E2E que cubran creación, actualización, eliminación, filtrado y estadísticas.
+- Criterios de aceptación:
+  - Existe documentación de los endpoints clave.
+  - Las pruebas E2E cubren al menos los flujos principales.
+  - Las pruebas pasan en el repositorio.
+
+Feature 12: Mejorar la configuración y despliegue con `.env.example`
+- Añadir `.env.example` con variables obligatorias.
+- Documentar en README el uso de `DB_SYNCHRONIZE=false` y el flujo de migraciones.
+- Criterios de aceptación:
+  - Hay un `.env.example` completo en la raíz.
+  - El README explica claramente las variables y recomendaciones.
+  - El proyecto puede iniciarse con el archivo de ejemplo si se completan los valores.
+
+Feature 13: Validación global y manejo centralizado de errores
+- Configurar `ValidationPipe` global en `main.ts`.
+- Añadir filtro de excepciones para respuestas uniformes en errores de validación.
+- Criterios de aceptación:
+  - Los DTOs de entrada se validan automáticamente.
+  - Las respuestas de error tienen formato uniforme.
+  - Las validaciones invalidan payloads malformados antes de llegar al servicio.
+
+Feature 14: Health check de base de datos y estado de dependencias
+- Extender `/health` para validar el acceso a la base de datos y la presencia de archivos estáticos.
+- Retornar `status: error` si alguno de los recursos no está disponible.
+- Criterios de aceptación:
+  - `/health` retorna `ok` cuando la DB y recursos están accesibles.
+  - Retorna `error` si la DB está caída o falta un recurso crítico.
+  - Incluye un timestamp y estado de cada dependencia.
+
+Feature 15: Autenticación y autorización básica
+- Añadir autenticación simple con credenciales en memoria o JWT para proteger endpoints críticos.
+- Permitir acceso solo a usuarios autenticados para modificar tareas y registrar eventos.
+- Registrar intentos de acceso fallidos en la tabla de eventos.
+- Criterios de aceptación:
+  - Los endpoints protegidos devuelven `401` si no hay token o credenciales válidas.
+  - Un usuario autenticado puede acceder a endpoints protegidos.
+  - Los intentos fallidos se registran como eventos en la base de datos.
+
+Feature 16: Hashing y almacenamiento seguro de secretos
+- Usar hashing con `bcrypt` para cualquier contraseña o token guardado en configuración.
+- No almacenar contraseñas en texto claro en `.env` ni en la base de datos.
+- Añadir validación de fuerza para contraseñas y tokens.
+- Criterios de aceptación:
+  - Las contraseñas nunca se almacenan en texto plano.
+  - El hashing de `bcrypt` se aplica antes de persistir credenciales.
+  - Las contraseñas débiles se rechazan con un mensaje claro.
+
+Feature 17: Sanitización y protección contra inyección
+- Validar y sanitizar `query` y `payload` en los endpoints de búsqueda y eventos.
+- Usar pipes y DTOs para evitar inyección de SQL/JSON y datos malformados.
+- Añadir filtros globales para limpiar entradas y respuestas.
+- Criterios de aceptación:
+  - Los campos de query se sanitizan antes de ser usados en consultas.
+  - Los payloads malformados son rechazados por validación.
+  - La aplicación no ejecuta consultas peligrosas a partir de datos de entrada.
+
+Feature 18: Límites y protección contra abuso
+- Implementar rate limiting en los endpoints públicos `POST /events` y `POST /tasks`.
+- Bloquear o ralentizar peticiones repetidas desde el mismo origen.
+- Registrar eventos de abuso en el sistema de auditoría.
+- Criterios de aceptación:
+  - Las peticiones excesivas reciben `429 Too Many Requests`.
+  - El rate limiting se aplica a los endpoints públicos definidos.
+  - Los eventos de abuso quedan registrados para auditoría.
