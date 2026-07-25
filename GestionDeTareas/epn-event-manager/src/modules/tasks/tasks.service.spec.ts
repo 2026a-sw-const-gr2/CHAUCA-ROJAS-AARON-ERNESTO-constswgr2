@@ -1,21 +1,31 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
-import { Repository, SelectQueryBuilder } from 'typeorm';
+import { Repository } from 'typeorm';
 import { TaskEntity } from '../../database/entities/task.entity';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 import { TasksService } from './tasks.service';
 
 describe('TasksService', () => {
   let service: TasksService;
   let repo: jest.Mocked<Repository<TaskEntity>>;
-  let qb: jest.Mocked<SelectQueryBuilder<TaskEntity>>;
+  let andWhere: jest.Mock;
+  let orderBy: jest.Mock;
+  let getMany: jest.Mock;
 
   beforeEach(async () => {
-    qb = {
-      andWhere: jest.fn().mockReturnThis(),
-      orderBy: jest.fn().mockReturnThis(),
-      getMany: jest.fn().mockResolvedValue([]),
-    } as unknown as jest.Mocked<SelectQueryBuilder<TaskEntity>>;
+    andWhere = jest.fn();
+    orderBy = jest.fn();
+    getMany = jest.fn().mockResolvedValue([]);
+
+    const qb = {
+      andWhere,
+      orderBy,
+      getMany,
+    };
+    andWhere.mockReturnValue(qb);
+    orderBy.mockReturnValue(qb);
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -39,14 +49,16 @@ describe('TasksService', () => {
 
   describe('create', () => {
     it('creates a task including the responsable field', async () => {
-      const dto = { titulo: 'Test', responsable: 'Juan' };
+      const dto: CreateTaskDto = { titulo: 'Test', responsable: 'Juan' };
       const created = { id: 1, ...dto, estado: 'pendiente' } as TaskEntity;
       repo.create.mockReturnValue(created);
       repo.save.mockResolvedValue(created);
 
-      const result = await service.create(dto as any);
+      const result = await service.create(dto);
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      const createMock = jest.mocked(repo.create);
 
-      expect(repo.create).toHaveBeenCalledWith(
+      expect(createMock).toHaveBeenCalledWith(
         expect.objectContaining({ responsable: 'Juan' }),
       );
       expect(result).toEqual(created);
@@ -57,29 +69,28 @@ describe('TasksService', () => {
     it('applies no filters when query is empty', async () => {
       await service.findAll({});
 
-      expect(qb.andWhere).not.toHaveBeenCalled();
-      expect(qb.orderBy).toHaveBeenCalledWith('task.id', 'DESC');
-      expect(qb.getMany).toHaveBeenCalled();
+      expect(andWhere).not.toHaveBeenCalled();
+      expect(orderBy).toHaveBeenCalledWith('task.id', 'DESC');
+      expect(getMany).toHaveBeenCalled();
     });
 
     it('filters only by responsable', async () => {
       await service.findAll({ responsable: 'Juan' });
 
-      expect(qb.andWhere).toHaveBeenCalledWith(
-        'task.responsable LIKE :resp',
-        { resp: '%Juan%' },
-      );
-      expect(qb.andWhere).toHaveBeenCalledTimes(1);
+      expect(andWhere).toHaveBeenCalledWith('task.responsable LIKE :resp', {
+        resp: '%Juan%',
+      });
+      expect(andWhere).toHaveBeenCalledTimes(1);
     });
 
     it('filters only by date range', async () => {
       await service.findAll({ desde: '2026-01-01', hasta: '2026-12-31' });
 
-      expect(qb.andWhere).toHaveBeenCalledWith(
+      expect(andWhere).toHaveBeenCalledWith(
         'task.fecha_creacion BETWEEN :desde AND :hasta',
         { desde: '2026-01-01', hasta: '2026-12-31' },
       );
-      expect(qb.andWhere).toHaveBeenCalledTimes(1);
+      expect(andWhere).toHaveBeenCalledTimes(1);
     });
 
     it('combines responsable and date range filters', async () => {
@@ -90,15 +101,14 @@ describe('TasksService', () => {
         estado: 'pendiente',
       });
 
-      expect(qb.andWhere).toHaveBeenCalledTimes(3);
-      expect(qb.andWhere).toHaveBeenCalledWith(
-        'task.responsable LIKE :resp',
-        { resp: '%Juan%' },
-      );
-      expect(qb.andWhere).toHaveBeenCalledWith('task.estado = :estado', {
+      expect(andWhere).toHaveBeenCalledTimes(3);
+      expect(andWhere).toHaveBeenCalledWith('task.responsable LIKE :resp', {
+        resp: '%Juan%',
+      });
+      expect(andWhere).toHaveBeenCalledWith('task.estado = :estado', {
         estado: 'pendiente',
       });
-      expect(qb.andWhere).toHaveBeenCalledWith(
+      expect(andWhere).toHaveBeenCalledWith(
         'task.fecha_creacion BETWEEN :desde AND :hasta',
         { desde: '2026-01-01', hasta: '2026-12-31' },
       );
@@ -109,9 +119,9 @@ describe('TasksService', () => {
     it('throws NotFoundException when task does not exist', async () => {
       repo.findOneBy.mockResolvedValue(null);
 
-      await expect(service.update(1, {} as any)).rejects.toThrow(
-        NotFoundException,
-      );
+      const dto: UpdateTaskDto = {};
+
+      await expect(service.update(1, dto)).rejects.toThrow(NotFoundException);
     });
 
     it('updates the responsable field when provided', async () => {
@@ -125,9 +135,8 @@ describe('TasksService', () => {
       repo.findOneBy.mockResolvedValue(task);
       repo.save.mockImplementation((t) => Promise.resolve(t as TaskEntity));
 
-      const result = await service.update(1, {
-        responsable: 'New Owner',
-      } as any);
+      const dto: UpdateTaskDto = { responsable: 'New Owner' };
+      const result = await service.update(1, dto);
 
       expect(result.responsable).toBe('New Owner');
     });
@@ -135,13 +144,13 @@ describe('TasksService', () => {
 
   describe('remove', () => {
     it('throws NotFoundException when no rows were affected', async () => {
-      repo.delete.mockResolvedValue({ affected: 0 } as any);
+      repo.delete.mockResolvedValue({ affected: 0, raw: {} });
 
       await expect(service.remove(1)).rejects.toThrow(NotFoundException);
     });
 
     it('removes an existing task', async () => {
-      repo.delete.mockResolvedValue({ affected: 1 } as any);
+      repo.delete.mockResolvedValue({ affected: 1, raw: {} });
 
       const result = await service.remove(1);
 
