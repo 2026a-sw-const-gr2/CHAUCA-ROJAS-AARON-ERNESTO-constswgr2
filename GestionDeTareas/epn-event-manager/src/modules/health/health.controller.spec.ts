@@ -31,9 +31,7 @@ describe('HealthController', () => {
   });
 
   it('throws ServiceUnavailableException (503) when the database query fails', async () => {
-    dataSource.query.mockRejectedValue(new Error('connection refused'));
-
-    await expect(controller.check()).rejects.toBeInstanceOf(ServiceUnavailableException);
+    dataSource.query.mockRejectedValueOnce(new Error('connection refused'));
 
     try {
       await controller.check();
