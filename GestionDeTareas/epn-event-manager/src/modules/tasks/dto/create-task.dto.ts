@@ -11,4 +11,8 @@ export class CreateTaskDto {
   @IsOptional()
   @IsIn(['pendiente', 'en progreso', 'completada']) //Evita que se ingresen estados no válidos
   estado?: string;
+
+  @IsOptional()
+  @IsString()
+  responsable?: string;
 }
