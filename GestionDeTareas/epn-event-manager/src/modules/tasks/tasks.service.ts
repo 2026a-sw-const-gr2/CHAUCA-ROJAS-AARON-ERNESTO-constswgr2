@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TaskEntity } from '../../database/entities/task.entity';
+import { EventsService } from '../events/events.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { FindTasksQueryDto } from './dto/find-tasks-query.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -11,6 +12,7 @@ export class TasksService {
   constructor(
     @InjectRepository(TaskEntity)
     private readonly taskRepo: Repository<TaskEntity>,
+    private readonly eventsService: EventsService,
   ) {}
 
   async create(dto: CreateTaskDto): Promise<TaskEntity> {
@@ -22,7 +24,11 @@ export class TasksService {
       responsable: dto.responsable,
     });
 
-    return this.taskRepo.save(task);
+    const savedTask = await this.taskRepo.save(task);
+
+    await this.registerAuditEvent('CREATE', savedTask);
+
+    return savedTask;
   }
 
   async findAll(queryDto: FindTasksQueryDto = {}): Promise<TaskEntity[]> {
@@ -60,17 +66,48 @@ export class TasksService {
     task.estado = dto.estado ? this.normalizeStatus(dto.estado) : task.estado;
     task.responsable = dto.responsable ?? task.responsable;
 
-    return this.taskRepo.save(task);
+    const updatedTask = await this.taskRepo.save(task);
+
+    await this.registerAuditEvent('UPDATE', updatedTask);
+
+    return updatedTask;
   }
 
   async remove(id: number): Promise<{ ok: boolean }> {
+    const task = await this.taskRepo.findOneBy({ id });
     const result = await this.taskRepo.delete(id);
 
     if (!result.affected) {
       throw new NotFoundException('Tarea no encontrada');
     }
 
+    if (task) {
+      await this.registerAuditEvent('DELETE', task);
+    }
+
     return { ok: true };
+  }
+
+  private async registerAuditEvent(
+    action: 'CREATE' | 'UPDATE' | 'DELETE',
+    task: TaskEntity,
+  ): Promise<void> {
+    try {
+      await this.eventsService.registerEvent({
+        source: 'tasks',
+        entity: 'task',
+        action,
+        title: `Tarea ${action.toLowerCase()}`,
+        payload: {
+          id: task.id,
+          titulo: task.titulo,
+          descripcion: task.descripcion,
+          estado: task.estado,
+        },
+      });
+    } catch {
+      // La auditoría no debe interrumpir ni revertir la operación principal sobre la tarea.
+    }
   }
 
   private normalizeStatus(status?: string): string {
