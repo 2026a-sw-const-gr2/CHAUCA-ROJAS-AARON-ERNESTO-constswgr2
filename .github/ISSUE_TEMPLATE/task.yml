@@ -1,0 +1,18 @@
+name: Task
+description: Tarea técnica o administrativa
+labels: ["task"]
+body:
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Descripción de la tarea
+    validations:
+      required: true
+
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      placeholder: "- [ ] La tarea está completada"
+    validations:
+      required: true
