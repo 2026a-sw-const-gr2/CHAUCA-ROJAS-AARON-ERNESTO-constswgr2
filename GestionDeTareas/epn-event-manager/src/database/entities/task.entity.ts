@@ -16,4 +16,7 @@ export class TaskEntity {
 
   @Column()
   fecha_creacion!: string;
+
+  @Column({ nullable: true })
+  responsable!: string;
 }
