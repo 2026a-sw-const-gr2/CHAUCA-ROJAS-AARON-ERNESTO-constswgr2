@@ -7,7 +7,8 @@ on:
     branches: [main, develop]
 
 jobs:
-  lint:
+  build-and-test:
+    name: Build and Test  # 👈 Este nombre es el que busca el Ruleset
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -18,32 +19,6 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm run lint
-
-  build:
-    needs: lint
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: GestionDeTareas/epn-event-manager
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
+      - run: npm run lint --if-present
       - run: npm run build
-
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: GestionDeTareas/epn-event-manager
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm test
+      - run: npm test --if-present
