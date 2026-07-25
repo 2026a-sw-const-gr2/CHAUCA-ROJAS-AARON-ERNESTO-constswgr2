@@ -33,7 +33,7 @@ describe('EventsService', () => {
       action: 'INVALID',
       title: 'bad',
       description: 'bad',
-      payload: { query_term: 'x' } as Record<string, unknown>,
+      payload: { query_term: 'x' },
     };
 
     await expect(service.registerEvent(dto)).rejects.toThrow(
