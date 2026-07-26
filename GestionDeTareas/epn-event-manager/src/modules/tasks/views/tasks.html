@@ -27,6 +27,8 @@
     th { background: #efefef; }
     .actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .message { margin-bottom: 12px; min-height: 20px; }
+    .filters { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 16px; margin-bottom: 20px; display: flex; gap: 16px; flex-wrap: wrap; max-width: 720px; }
+    .filters > div { flex: 1; min-width: 200px; }
   </style>
 </head>
 <body>
@@ -57,6 +59,22 @@
     </div>
   </form>
 
+  <div class="filters">
+    <div>
+      <label for="searchInput">Buscar por titulo</label>
+      <input id="searchInput" type="text" placeholder="Buscar por titulo...">
+    </div>
+    <div>
+      <label for="statusFilter">Filtrar por estado</label>
+      <select id="statusFilter">
+        <option value="">Todos los estados</option>
+        <option value="pendiente">pendiente</option>
+        <option value="en progreso">en progreso</option>
+        <option value="completada">completada</option>
+      </select>
+    </div>
+  </div>
+
   <table>
     <thead>
       <tr>
@@ -75,6 +93,12 @@
     const form = document.getElementById('taskForm');
     const message = document.getElementById('message');
     const tasksBody = document.getElementById('tasksBody');
+    const searchInput = document.getElementById('searchInput');
+    const statusFilter = document.getElementById('statusFilter');
+    const SEARCH_DEBOUNCE_MS = 300;
+
+    let allTasks = [];
+    let searchDebounceTimer;
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -87,43 +111,102 @@
       const url = id ? '/tasks/' + id : '/tasks';
       const method = id ? 'PUT' : 'POST';
 
-      await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+      try {
+        const response = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
 
-      clearForm();
-      showMessage('Tarea guardada');
-      loadTasks();
+        if (!response.ok) {
+          showMessage(await getErrorMessage(response), true);
+          return;
+        }
+
+        clearForm();
+        showMessage('Tarea guardada');
+        loadTasks();
+      } catch (error) {
+        showMessage('No se pudo conectar con el servidor. Intenta nuevamente.', true);
+      }
     });
 
     async function loadTasks() {
-      const response = await fetch('/tasks');
-      const tasks = await response.json();
-      tasksBody.innerHTML = '';
+      try {
+        const response = await fetch('/tasks');
+
+        if (!response.ok) {
+          showMessage(await getErrorMessage(response), true);
+          return;
+        }
+
+        allTasks = await response.json();
+        applyFilters();
+      } catch (error) {
+        showMessage('No se pudo conectar con el servidor. Intenta nuevamente.', true);
+      }
+    }
+
+    function filterTasks() {
+      const term = searchInput.value.trim().toLowerCase();
+      const status = statusFilter.value;
+
+      return allTasks.filter((task) => {
+        const matchesTitle = !term || task.titulo.toLowerCase().includes(term);
+        const matchesStatus = !status || task.estado === status;
+        return matchesTitle && matchesStatus;
+      });
+    }
+
+    function applyFilters() {
+      renderTasks(filterTasks());
+    }
+
+    function createTaskCell(text) {
+      const cell = document.createElement('td');
+      cell.textContent = text;
+      return cell;
+    }
+
+    function createActionButton(label, onClick) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = label;
+      button.addEventListener('click', onClick);
+      return button;
+    }
+
+    function renderTasks(tasks) {
+      tasksBody.replaceChildren();
 
       tasks.forEach((task) => {
         const row = document.createElement('tr');
-        row.innerHTML = '<td>' + task.id + '</td>'
-          + '<td>' + escapeHtml(task.titulo) + '</td>'
-          + '<td>' + escapeHtml(task.descripcion || '') + '</td>'
-          + '<td>' + escapeHtml(task.estado) + '</td>'
-          + '<td>' + escapeHtml(task.fecha_creacion) + '</td>'
-          + '<td class="actions">'
-          + '<button type="button" onclick="editTask(' + task.id + ')">Editar</button>'
-          + '<button type="button" onclick="deleteTask(' + task.id + ')">Eliminar</button>'
-          + '</td>';
-        row.dataset.task = JSON.stringify(task);
+        row.appendChild(createTaskCell(task.id));
+        row.appendChild(createTaskCell(task.titulo));
+        row.appendChild(createTaskCell(task.descripcion || ''));
+        row.appendChild(createTaskCell(task.estado));
+        row.appendChild(createTaskCell(task.fecha_creacion));
+
+        const actionsCell = document.createElement('td');
+        actionsCell.className = 'actions';
+        actionsCell.appendChild(createActionButton('Editar', () => editTask(task.id)));
+        actionsCell.appendChild(createActionButton('Eliminar', () => deleteTask(task.id)));
+        row.appendChild(actionsCell);
+
         tasksBody.appendChild(row);
       });
     }
 
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(applyFilters, SEARCH_DEBOUNCE_MS);
+    });
+
+    statusFilter.addEventListener('change', applyFilters);
+
     function editTask(id) {
-      const row = Array.from(tasksBody.children).find((item) => {
-        return JSON.parse(item.dataset.task).id === id;
-      });
-      const task = JSON.parse(row.dataset.task);
+      const task = allTasks.find((item) => item.id === id);
+      if (!task) return;
       document.getElementById('taskId').value = task.id;
       document.getElementById('titulo').value = task.titulo;
       document.getElementById('descripcion').value = task.descripcion || '';
@@ -131,9 +214,19 @@
     }
 
     async function deleteTask(id) {
-      await fetch('/tasks/' + id, { method: 'DELETE' });
-      showMessage('Tarea eliminada');
-      loadTasks();
+      try {
+        const response = await fetch('/tasks/' + id, { method: 'DELETE' });
+
+        if (!response.ok) {
+          showMessage(await getErrorMessage(response), true);
+          return;
+        }
+
+        showMessage('Tarea eliminada');
+        loadTasks();
+      } catch (error) {
+        showMessage('No se pudo conectar con el servidor. Intenta nuevamente.', true);
+      }
     }
 
     function clearForm() {
@@ -141,18 +234,25 @@
       form.reset();
     }
 
-    function showMessage(text) {
+    function showMessage(text, isError) {
       message.textContent = text;
-      setTimeout(() => message.textContent = '', 2500);
+      message.style.color = isError ? '#b00020' : '';
+      setTimeout(() => {
+        message.textContent = '';
+        message.style.color = '';
+      }, 2500);
     }
 
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
+    async function getErrorMessage(response) {
+      try {
+        const data = await response.json();
+        if (data && (data.message || data.error)) {
+          return data.message || data.error;
+        }
+      } catch (error) {
+        // El cuerpo de la respuesta no es JSON o esta vacio; se usa el mensaje generico.
+      }
+      return 'Error ' + response.status + ': no se pudo completar la operacion.';
     }
 
     loadTasks();

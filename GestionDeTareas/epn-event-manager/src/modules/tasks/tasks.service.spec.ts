@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { TaskEntity } from '../../database/entities/task.entity';
+import { EventsService } from '../events/events.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TasksService } from './tasks.service';
@@ -10,6 +11,7 @@ import { TasksService } from './tasks.service';
 describe('TasksService', () => {
   let service: TasksService;
   let repo: jest.Mocked<Repository<TaskEntity>>;
+  let eventsService: jest.Mocked<EventsService>;
   let andWhere: jest.Mock;
   let orderBy: jest.Mock;
   let getMany: jest.Mock;
@@ -40,11 +42,18 @@ describe('TasksService', () => {
             createQueryBuilder: jest.fn().mockReturnValue(qb),
           },
         },
+        {
+          provide: EventsService,
+          useValue: {
+            registerEvent: jest.fn().mockResolvedValue({ ok: true }),
+          },
+        },
       ],
     }).compile();
 
     service = module.get<TasksService>(TasksService);
     repo = module.get(getRepositoryToken(TaskEntity));
+    eventsService = module.get(EventsService);
   });
 
   describe('create', () => {
@@ -61,6 +70,40 @@ describe('TasksService', () => {
       expect(createMock).toHaveBeenCalledWith(
         expect.objectContaining({ responsable: 'Juan' }),
       );
+      expect(result).toEqual(created);
+    });
+
+    it('registers a CREATE audit event after saving the task', async () => {
+      const dto: CreateTaskDto = { titulo: 'Test', responsable: 'Juan' };
+      const created = { id: 1, ...dto, estado: 'pendiente' } as TaskEntity;
+      repo.create.mockReturnValue(created);
+      repo.save.mockResolvedValue(created);
+
+      await service.create(dto);
+
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(eventsService.registerEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          source: 'tasks',
+          entity: 'task',
+          action: 'CREATE',
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          payload: expect.objectContaining({ id: 1 }),
+        }),
+      );
+    });
+
+    it('does not fail the create operation when the audit event fails', async () => {
+      const dto: CreateTaskDto = { titulo: 'Test', responsable: 'Juan' };
+      const created = { id: 1, ...dto, estado: 'pendiente' } as TaskEntity;
+      repo.create.mockReturnValue(created);
+      repo.save.mockResolvedValue(created);
+      eventsService.registerEvent.mockRejectedValueOnce(
+        new Error('audit down'),
+      );
+
+      const result = await service.create(dto);
+
       expect(result).toEqual(created);
     });
   });
@@ -140,17 +183,87 @@ describe('TasksService', () => {
 
       expect(result.responsable).toBe('New Owner');
     });
+
+    it('registers an UPDATE audit event after saving the task', async () => {
+      const task = {
+        id: 1,
+        titulo: 'Old',
+        descripcion: 'Old',
+        estado: 'pendiente',
+        responsable: 'Old Owner',
+      } as TaskEntity;
+      repo.findOneBy.mockResolvedValue(task);
+      repo.save.mockImplementation((t) => Promise.resolve(t as TaskEntity));
+
+      await service.update(1, { responsable: 'New Owner' });
+
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(eventsService.registerEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          source: 'tasks',
+          entity: 'task',
+          action: 'UPDATE',
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          payload: expect.objectContaining({ id: 1 }),
+        }),
+      );
+    });
+
+    it('does not fail the update operation when the audit event fails', async () => {
+      const task = {
+        id: 1,
+        titulo: 'Old',
+        descripcion: 'Old',
+        estado: 'pendiente',
+        responsable: 'Old Owner',
+      } as TaskEntity;
+      repo.findOneBy.mockResolvedValue(task);
+      repo.save.mockImplementation((t) => Promise.resolve(t as TaskEntity));
+      eventsService.registerEvent.mockRejectedValueOnce(
+        new Error('audit down'),
+      );
+
+      const result = await service.update(1, { responsable: 'New Owner' });
+
+      expect(result.responsable).toBe('New Owner');
+    });
   });
 
   describe('remove', () => {
     it('throws NotFoundException when no rows were affected', async () => {
+      repo.findOneBy.mockResolvedValue(null);
       repo.delete.mockResolvedValue({ affected: 0, raw: {} });
 
       await expect(service.remove(1)).rejects.toThrow(NotFoundException);
     });
 
-    it('removes an existing task', async () => {
+    it('removes an existing task and registers a DELETE audit event', async () => {
+      const task = { id: 1, titulo: 'Old' } as TaskEntity;
+      repo.findOneBy.mockResolvedValue(task);
       repo.delete.mockResolvedValue({ affected: 1, raw: {} });
+
+      const result = await service.remove(1);
+
+      expect(result).toEqual({ ok: true });
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(eventsService.registerEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          source: 'tasks',
+          entity: 'task',
+          action: 'DELETE',
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          payload: expect.objectContaining({ id: 1 }),
+        }),
+      );
+    });
+
+    it('does not fail the remove operation when the audit event fails', async () => {
+      const task = { id: 1, titulo: 'Old' } as TaskEntity;
+      repo.findOneBy.mockResolvedValue(task);
+      repo.delete.mockResolvedValue({ affected: 1, raw: {} });
+      eventsService.registerEvent.mockRejectedValueOnce(
+        new Error('audit down'),
+      );
 
       const result = await service.remove(1);
 
