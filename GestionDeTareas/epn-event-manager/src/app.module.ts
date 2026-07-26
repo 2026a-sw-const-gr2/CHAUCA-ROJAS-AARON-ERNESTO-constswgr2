@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import * as Joi from 'joi';
 import { DatabaseModule } from './database/database.module';
 import { EventsModule } from './modules/events/events.module';
 import { HealthModule } from './modules/health/health.module';
@@ -11,7 +12,18 @@ import { ProjectsModule } from './modules/projects/projects.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.string()
+          .valid('development', 'production', 'test')
+          .default('development'),
+        PORT: Joi.number().default(3000),
+        DB_TYPE: Joi.string().required(),
+        DB_NAME: Joi.string().required(),
+        DB_SYNCHRONIZE: Joi.boolean().required(),
+      }),
+    }),
     ThrottlerModule.forRoot([
       {
         ttl: 60000, // Tiempo de vida: 1 minuto (60,000 ms)
