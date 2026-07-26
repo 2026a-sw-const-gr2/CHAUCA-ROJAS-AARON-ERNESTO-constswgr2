@@ -162,20 +162,37 @@
       renderTasks(filterTasks());
     }
 
+    function createTaskCell(text) {
+      const cell = document.createElement('td');
+      cell.textContent = text;
+      return cell;
+    }
+
+    function createActionButton(label, onClick) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = label;
+      button.addEventListener('click', onClick);
+      return button;
+    }
+
     function renderTasks(tasks) {
-      tasksBody.innerHTML = '';
+      tasksBody.replaceChildren();
 
       tasks.forEach((task) => {
         const row = document.createElement('tr');
-        row.innerHTML = '<td>' + task.id + '</td>'
-          + '<td>' + escapeHtml(task.titulo) + '</td>'
-          + '<td>' + escapeHtml(task.descripcion || '') + '</td>'
-          + '<td>' + escapeHtml(task.estado) + '</td>'
-          + '<td>' + escapeHtml(task.fecha_creacion) + '</td>'
-          + '<td class="actions">'
-          + '<button type="button" onclick="editTask(' + task.id + ')">Editar</button>'
-          + '<button type="button" onclick="deleteTask(' + task.id + ')">Eliminar</button>'
-          + '</td>';
+        row.appendChild(createTaskCell(task.id));
+        row.appendChild(createTaskCell(task.titulo));
+        row.appendChild(createTaskCell(task.descripcion || ''));
+        row.appendChild(createTaskCell(task.estado));
+        row.appendChild(createTaskCell(task.fecha_creacion));
+
+        const actionsCell = document.createElement('td');
+        actionsCell.className = 'actions';
+        actionsCell.appendChild(createActionButton('Editar', () => editTask(task.id)));
+        actionsCell.appendChild(createActionButton('Eliminar', () => deleteTask(task.id)));
+        row.appendChild(actionsCell);
+
         tasksBody.appendChild(row);
       });
     }
@@ -236,15 +253,6 @@
         // El cuerpo de la respuesta no es JSON o esta vacio; se usa el mensaje generico.
       }
       return 'Error ' + response.status + ': no se pudo completar la operacion.';
-    }
-
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
     }
 
     loadTasks();
