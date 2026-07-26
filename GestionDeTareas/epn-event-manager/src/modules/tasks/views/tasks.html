@@ -87,36 +87,55 @@
       const url = id ? '/tasks/' + id : '/tasks';
       const method = id ? 'PUT' : 'POST';
 
-      await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+      try {
+        const response = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
 
-      clearForm();
-      showMessage('Tarea guardada');
-      loadTasks();
+        if (!response.ok) {
+          showMessage(await getErrorMessage(response), true);
+          return;
+        }
+
+        clearForm();
+        showMessage('Tarea guardada');
+        loadTasks();
+      } catch (error) {
+        showMessage('No se pudo conectar con el servidor. Intenta nuevamente.', true);
+      }
     });
 
     async function loadTasks() {
-      const response = await fetch('/tasks');
-      const tasks = await response.json();
-      tasksBody.innerHTML = '';
+      try {
+        const response = await fetch('/tasks');
 
-      tasks.forEach((task) => {
-        const row = document.createElement('tr');
-        row.innerHTML = '<td>' + task.id + '</td>'
-          + '<td>' + escapeHtml(task.titulo) + '</td>'
-          + '<td>' + escapeHtml(task.descripcion || '') + '</td>'
-          + '<td>' + escapeHtml(task.estado) + '</td>'
-          + '<td>' + escapeHtml(task.fecha_creacion) + '</td>'
-          + '<td class="actions">'
-          + '<button type="button" onclick="editTask(' + task.id + ')">Editar</button>'
-          + '<button type="button" onclick="deleteTask(' + task.id + ')">Eliminar</button>'
-          + '</td>';
-        row.dataset.task = JSON.stringify(task);
-        tasksBody.appendChild(row);
-      });
+        if (!response.ok) {
+          showMessage(await getErrorMessage(response), true);
+          return;
+        }
+
+        const tasks = await response.json();
+        tasksBody.innerHTML = '';
+
+        tasks.forEach((task) => {
+          const row = document.createElement('tr');
+          row.innerHTML = '<td>' + task.id + '</td>'
+            + '<td>' + escapeHtml(task.titulo) + '</td>'
+            + '<td>' + escapeHtml(task.descripcion || '') + '</td>'
+            + '<td>' + escapeHtml(task.estado) + '</td>'
+            + '<td>' + escapeHtml(task.fecha_creacion) + '</td>'
+            + '<td class="actions">'
+            + '<button type="button" onclick="editTask(' + task.id + ')">Editar</button>'
+            + '<button type="button" onclick="deleteTask(' + task.id + ')">Eliminar</button>'
+            + '</td>';
+          row.dataset.task = JSON.stringify(task);
+          tasksBody.appendChild(row);
+        });
+      } catch (error) {
+        showMessage('No se pudo conectar con el servidor. Intenta nuevamente.', true);
+      }
     }
 
     function editTask(id) {
@@ -131,9 +150,19 @@
     }
 
     async function deleteTask(id) {
-      await fetch('/tasks/' + id, { method: 'DELETE' });
-      showMessage('Tarea eliminada');
-      loadTasks();
+      try {
+        const response = await fetch('/tasks/' + id, { method: 'DELETE' });
+
+        if (!response.ok) {
+          showMessage(await getErrorMessage(response), true);
+          return;
+        }
+
+        showMessage('Tarea eliminada');
+        loadTasks();
+      } catch (error) {
+        showMessage('No se pudo conectar con el servidor. Intenta nuevamente.', true);
+      }
     }
 
     function clearForm() {
@@ -141,9 +170,25 @@
       form.reset();
     }
 
-    function showMessage(text) {
+    function showMessage(text, isError) {
       message.textContent = text;
-      setTimeout(() => message.textContent = '', 2500);
+      message.style.color = isError ? '#b00020' : '';
+      setTimeout(() => {
+        message.textContent = '';
+        message.style.color = '';
+      }, 2500);
+    }
+
+    async function getErrorMessage(response) {
+      try {
+        const data = await response.json();
+        if (data && (data.message || data.error)) {
+          return data.message || data.error;
+        }
+      } catch (error) {
+        // El cuerpo de la respuesta no es JSON o esta vacio; se usa el mensaje generico.
+      }
+      return 'Error ' + response.status + ': no se pudo completar la operacion.';
     }
 
     function escapeHtml(value) {
