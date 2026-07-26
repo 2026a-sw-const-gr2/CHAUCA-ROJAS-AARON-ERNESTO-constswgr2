@@ -38,9 +38,9 @@ describe('AllExceptionsFilter', () => {
       }),
     } as unknown as ArgumentsHost;
 
-    jest.spyOn(Date.prototype, 'toISOString').mockReturnValue(
-      '2026-07-24T17:27:25.000Z',
-    );
+    jest
+      .spyOn(Date.prototype, 'toISOString')
+      .mockReturnValue('2026-07-24T17:27:25.000Z');
   });
 
   afterEach(() => {

@@ -26,7 +26,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const { httpAdapter } = this.httpAdapterHost;
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Record<string, unknown>>();
-    const response = ctx.getResponse();
+    const response = ctx.getResponse<unknown>();
 
     const isHttpException = exception instanceof HttpException;
     const statusCode = isHttpException
@@ -68,8 +68,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
       const payload = exceptionResponse as Record<string, unknown>;
       const message =
-        (payload.message as string | string[] | undefined) ??
-        exception.message;
+        (payload.message as string | string[] | undefined) ?? exception.message;
       const error =
         (typeof payload.error === 'string' && payload.error) ||
         this.statusLabel(statusCode);
